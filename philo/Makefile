@@ -1,7 +1,10 @@
 NAME = philo
 OBJ_DIR = .objs
 
-SRC =	main.c
+SRC =	main.c \
+		philosopher.c \
+		time.c \
+		utils.c
 
 OBJ = $(patsubst %.c, $(OBJ_DIR)/%.o, $(SRC))
 
