@@ -6,7 +6,7 @@
 /*   By: wbertoni <wbertoni@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 22:39:32 by coder             #+#    #+#             */
-/*   Updated: 2021/12/05 20:03:26 by wbertoni         ###   ########.fr       */
+/*   Updated: 2021/12/05 20:16:19 by wbertoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,10 @@ t_thread_of_life	*parcae(t_philo *philo, t_args *args)
 	thread_of_life = (t_thread_of_life *)malloc(1 * sizeof(t_thread_of_life));
 	thread_of_life->args = args;
 	thread_of_life->philo = philo;
+	return (thread_of_life);
 }
 
-void	silver_cloud(void *thread_of_life)
+void	*silver_cloud(void *thread_of_life)
 {
 	t_thread_of_life	*thread;
 
@@ -66,7 +67,7 @@ void	*init_philo(void *args)
 	thread_of_life = parcae(&philo, args);
 	pthread_create(&thanatos, NULL, &silver_cloud, &thread_of_life);
 	pthread_detach(thanatos);
-	while (eat(&philo, args) || sleep(&philo, args) || think(&philo, args))
+	while (eat(&philo, args) || sleeping(&philo, args) || think(&philo, args))
 		continue ;
 	return (NULL);
 }

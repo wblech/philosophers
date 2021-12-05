@@ -6,7 +6,7 @@
 /*   By: wbertoni <wbertoni@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:01:23 by coder             #+#    #+#             */
-/*   Updated: 2021/12/05 19:30:14 by wbertoni         ###   ########.fr       */
+/*   Updated: 2021/12/05 20:16:19 by wbertoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	init_args(t_args *args, int argc, char *argv[])
 	args->number_of_philosophers = ft_atoi(argv[1]);
 	args->time_to_die = ft_atoi(argv[2]);
 	args->time_to_eat = ft_atoi(argv[3]);
-	args->time_to_sleep = ft_atoi(argv[4]);
+	args->time_to_sleeping = ft_atoi(argv[4]);
 	if (argc > 5)
 		args->number_of_times_each_philosopher_must_eat = ft_atoi(argv[5]);
 	else
@@ -45,7 +45,7 @@ void	check_args(int argc)
 	if (argc < 5 || argc > 6)
 	{
 		printf("Error: You should give 4 obligatory arguments and 1 optional: \
-number_of_philosophers, time_to_die, time_to_eat, time_to_sleep,\
+number_of_philosophers, time_to_die, time_to_eat, time_to_sleeping,\
 [number_of_times_each_philosopher_must_eat]\n");
 		exit(1);
 	}
@@ -53,7 +53,7 @@ number_of_philosophers, time_to_die, time_to_eat, time_to_sleep,\
 
 /*
 **	number_of_philosophers time_to_die time_to_eat
-**  time_to_sleep [number_of_times_each_philosopher_must_eat]
+**  time_to_sleeping [number_of_times_each_philosopher_must_eat]
 */
 int	main(int argc, char *argv[])
 {

@@ -4,7 +4,10 @@ OBJ_DIR = .objs
 SRC =	main.c \
 		philosopher.c \
 		time.c \
-		utils.c
+		utils.c \
+		cave.c \
+		print_msg.c \
+		thanatos.c
 
 OBJ = $(patsubst %.c, $(OBJ_DIR)/%.o, $(SRC))
 

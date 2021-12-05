@@ -6,13 +6,13 @@
 /*   By: wbertoni <wbertoni@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/05 19:36:05 by wbertoni          #+#    #+#             */
-/*   Updated: 2021/12/05 20:00:20 by wbertoni         ###   ########.fr       */
+/*   Updated: 2021/12/05 20:16:36 by wbertoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	get_fork(t_philo *philo, t_args *args)
+static void	get_fork(t_philo *philo, t_args *args)
 {
 	pthread_mutex_lock(&args->forks[philo->left_fork]);
 	print_msg("has taken a fork", philo, args);
@@ -20,18 +20,18 @@ void	get_fork(t_philo *philo, t_args *args)
 	print_msg("has taken a fork", philo, args);
 }
 
-void	drop_forks(t_philo *philo, t_args *args)
+static void	drop_forks(t_philo *philo, t_args *args)
 {
 	pthread_mutex_unlock(&args->forks[philo->left_fork]);
 	pthread_mutex_unlock(&args->forks[philo->right_fork]);
 	philo->ate_time++;
 }
 
-bool	sleep(t_philo *philo, t_args *args)
+bool	sleeping(t_philo *philo, t_args *args)
 {
-	if (!print_msg("is sleeping", philo, args))
+	if (!print_msg("is sleepinging", philo, args))
 		return (false);
-	usleep(args->time_to_sleep);
+	usleep(args->time_to_sleeping);
 	return (true);
 }
 
