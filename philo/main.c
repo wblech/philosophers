@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
+/*   By: wbertoni <wbertoni@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:01:23 by coder             #+#    #+#             */
-/*   Updated: 2021/10/14 17:09:10 by coder            ###   ########.fr       */
+/*   Updated: 2021/12/05 19:30:14 by wbertoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ pthread_t	*thread_id_arr(int size)
 
 void	init_args(t_args *args, int argc, char *argv[])
 {
-	timeval	begin;
+	struct timeval	begin;
 
 	gettimeofday(&begin, NULL);
 	args->number_of_philosophers = ft_atoi(argv[1]);
@@ -34,8 +34,10 @@ void	init_args(t_args *args, int argc, char *argv[])
 	else
 		args->number_of_times_each_philosopher_must_eat = -1;
 	args->forks = NULL;
-	args->count_id = 0;
-	args->time_begin = begin;
+	args->count_id = 1;
+	args->time_begin = convert_to_ms(begin);
+	args->forks = (pthread_mutex_t *)malloc(args->number_of_philosophers
+			* sizeof(pthread_mutex_t *));
 }
 
 void	check_args(int argc)
@@ -58,15 +60,21 @@ int	main(int argc, char *argv[])
 	pthread_t	*td;
 	int			i;
 	t_args		args;
-	bool		*forks;
+	int			j;
 
 	i = 0;
+	j = 0;
 	check_args(argc);
 	init_args(&args, argc, argv);
 	td = thread_id_arr(args.number_of_philosophers);
-	forks = (bool *)malloc(args.number_of_philosophers * sizeof(bool));
-	args.forks = forks;
 	pthread_mutex_init(&args.mutex, NULL);
+	pthread_mutex_init(&args.print, NULL);
+	pthread_mutex_init(&args.death, NULL);
+	while (j < args.number_of_philosophers)
+	{
+		pthread_mutex_init(&args.forks[j], NULL);
+		j++;
+	}
 	while (i < args.number_of_philosophers)
 	{
 		pthread_create(&td[i], NULL, &init_philo, &args);
@@ -79,7 +87,14 @@ int	main(int argc, char *argv[])
 		i++;
 	}
 	pthread_mutex_destroy(&args.mutex);
-	free(forks);
+	pthread_mutex_destroy(&args.print);
+	pthread_mutex_destroy(&args.death);
+	j = 0;
+	while (j < args.number_of_philosophers)
+	{
+		pthread_mutex_destroy(&args.forks[j]);
+		j++;
+	}
 	free(td);
 	return (0);
 }
