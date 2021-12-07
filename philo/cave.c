@@ -6,7 +6,7 @@
 /*   By: wbertoni <wbertoni@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/05 19:36:05 by wbertoni          #+#    #+#             */
-/*   Updated: 2021/12/07 13:57:18 by wbertoni         ###   ########.fr       */
+/*   Updated: 2021/12/07 14:36:26 by wbertoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,5 +51,7 @@ bool	eat(t_philo *philo)
 	print_msg("is eating", philo);
 	msleep(philo->args->time_to_eat);
 	drop_forks(philo);
+	if (full_tummy(philo))
+		return (false);
 	return (true);
 }
