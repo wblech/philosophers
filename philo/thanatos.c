@@ -6,53 +6,54 @@
 /*   By: wbertoni <wbertoni@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/05 16:30:53 by wbertoni          #+#    #+#             */
-/*   Updated: 2021/12/05 20:03:15 by wbertoni         ###   ########.fr       */
+/*   Updated: 2021/12/07 06:51:00 by wbertoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-bool	full_tummy(t_philo philo, t_args args)
+bool	full_tummy(t_philo *philo)
 {
-	if (args.number_of_times_each_philosopher_must_eat != 0
-		&& philo.ate_time >= args.number_of_times_each_philosopher_must_eat)
+	if (philo->args->number_of_times_each_philosopher_must_eat != 0
+		&& philo->ate_time
+		>= philo->args->number_of_times_each_philosopher_must_eat)
 		return (true);
 	return (false);
 }
 
-void	kill_philo(t_philo *philo, t_args *args)
+void	kill_philo(t_philo *philo)
 {
-	pthread_mutex_lock(&args->death);
-	if (is_not_worth_going_on(*args))
+	if (is_not_worth_going_on(philo->args))
 		return ;
-	print_msg("died", philo, args);
-	args->is_over = true;
-	pthread_mutex_unlock(&args->death);
+	pthread_mutex_lock(&philo->args->death);
+	print_msg("died", philo);
+	philo->args->is_over = true;
+	pthread_mutex_unlock(&philo->args->death);
 }
 
-bool	starved_to_death(t_philo *philo, t_args *args)
+bool	starved_to_death(t_philo *philo)
 {
 	long long int	now;
 
-	now = get_current_time();
-	if ((now - philo->last_meal) >= args->time_to_die)
+	now = elapsed_time(philo->args->time_begin);
+	if ((now - philo->last_meal) >= philo->args->time_to_die)
 	{
-		kill_philo(philo, args);
+		kill_philo(philo);
 		return (true);
 	}
 	return (false);
 }
 
-bool	is_not_worth_going_on(t_args args)
+bool	is_not_worth_going_on(t_args *args)
 {
-	return (args.is_over);
+	return (args->is_over);
 }
 
-bool	has_death_arrived(t_philo *philo, t_args *args)
+bool	has_death_arrived(t_philo *philo)
 {
-	if (is_not_worth_going_on(*args)
-		|| starved_to_death(philo, args)
-		|| full_tummy(*philo, *args))
+	if (is_not_worth_going_on(philo->args)
+		|| starved_to_death(philo)
+		|| full_tummy(philo))
 		return (true);
 	return (false);
 }
