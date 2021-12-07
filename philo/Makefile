@@ -8,7 +8,9 @@ SRC =	main.c \
 		cave.c \
 		print_msg.c \
 		thanatos.c \
-		real_life.c
+		real_life.c \
+		free_all_and_destroy.c \
+		one_philo.c
 
 OBJ = $(patsubst %.c, $(OBJ_DIR)/%.o, $(SRC))
 

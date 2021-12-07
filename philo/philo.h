@@ -6,7 +6,7 @@
 /*   By: wbertoni <wbertoni@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 02:25:11 by wbertoni          #+#    #+#             */
-/*   Updated: 2021/12/07 07:15:47 by wbertoni         ###   ########.fr       */
+/*   Updated: 2021/12/07 14:25:53 by wbertoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,9 @@
 # include <sys/time.h>
 # include <unistd.h>
 
+# define FORK "has taken a fork"
+# define DIE "die"
+
 typedef struct s_args
 {
 	int				number_of_philosophers;
@@ -30,8 +33,6 @@ typedef struct s_args
 	int				count_id;
 	double			time_begin;
 	bool			is_over;
-	int				who_died;
-	int				time_of_death;
 	pthread_t		*td;
 	pthread_mutex_t	mutex;
 	pthread_mutex_t	print;
@@ -49,12 +50,6 @@ typedef struct s_philo
 	t_args	*args;
 }	t_philo;
 
-typedef struct s_thread_of_life
-{
-	t_philo	*philo;
-	t_args	*args;
-}	t_thread_of_life;
-
 /*
 ** utils.c
 */
@@ -65,13 +60,12 @@ int				ft_atoi(const char *str);
 */
 void			*real_life(void *args);
 t_philo			*create_philo(t_philo *philo, t_args *args, int index);
-void			*silver_cloud(void *thread_of_life);
 
 /*
 ** real_life.c
 */
-// void			free_philosophers(t_philo **philosophers, int size);
 t_philo			*create_philosophers(t_args *args);
+void			start_real_life(t_philo *philo, t_args *args);
 
 /*
 ** time.c
@@ -98,4 +92,15 @@ bool			print_msg(char *str, t_philo *philo);
 bool			sleeping(t_philo *philo);
 bool			think(t_philo *philo);
 bool			eat(t_philo *philo);
+
+/*
+** free_all_and_destroy.c
+*/
+void			free_all_and_destroy(t_philo *philosophers, t_args *args);
+
+/*
+** one_philo.c
+*/
+void			one_philo(t_args *args);
+
 #endif

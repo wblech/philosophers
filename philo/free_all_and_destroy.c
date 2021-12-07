@@ -1,27 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_msg.c                                        :+:      :+:    :+:   */
+/*   free_all_and_destroy.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wbertoni <wbertoni@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/05 19:58:52 by wbertoni          #+#    #+#             */
-/*   Updated: 2021/12/07 14:20:20 by wbertoni         ###   ########.fr       */
+/*   Created: 2021/12/07 13:39:32 by wbertoni          #+#    #+#             */
+/*   Updated: 2021/12/07 13:40:02 by wbertoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-bool	print_msg(char *str, t_philo *philo)
+void	free_all_and_destroy(t_philo *philosophers, t_args *args)
 {
-	pthread_mutex_lock(&philo->args->print);
-	if (is_not_worth_going_on(philo->args))
+	int	i;
+
+	i = 0;
+	pthread_mutex_destroy(&args->mutex);
+	pthread_mutex_destroy(&args->print);
+	pthread_mutex_destroy(&args->death);
+	while (i < args->number_of_philosophers)
 	{
-		pthread_mutex_unlock(&philo->args->print);
-		return (false);
+		pthread_mutex_destroy(&args->forks[i]);
+		i++;
 	}
-	printf("%lld %d %s\n", elapsed_time(philo->args->time_begin),
-		philo->id, str);
-	pthread_mutex_unlock(&philo->args->print);
-	return (true);
+	free (philosophers);
+	free (args->td);
+	free (args->forks);
 }

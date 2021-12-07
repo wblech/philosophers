@@ -6,23 +6,13 @@
 /*   By: wbertoni <wbertoni@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 01:54:00 by wbertoni          #+#    #+#             */
-/*   Updated: 2021/12/07 08:03:43 by wbertoni         ###   ########.fr       */
+/*   Updated: 2021/12/07 14:25:03 by wbertoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-t_thread_of_life	*parcae(t_philo *philo, t_args *args)
-{
-	t_thread_of_life	*thread_of_life;
-
-	thread_of_life = (t_thread_of_life *)malloc(1 * sizeof(t_thread_of_life));
-	thread_of_life->args = args;
-	thread_of_life->philo = philo;
-	return (thread_of_life);
-}
-
-void	*silver_cloud(void *persona)
+static void	*silver_cloud(void *persona)
 {
 	t_philo	*philo;
 
@@ -52,4 +42,20 @@ void	*real_life(void *persona)
 	while (eat(philo) && sleeping(philo) && think(philo))
 		continue ;
 	return (NULL);
+}
+
+void	start_real_life(t_philo *philo, t_args *args)
+{
+	int			i;
+	pthread_t	*td;
+
+	i = 0;
+	td = thread_id_arr(args->number_of_philosophers);
+	args->td = td;
+	args->time_begin = get_current_time();
+	while (i < args->number_of_philosophers)
+	{
+		pthread_create(&td[i], NULL, &real_life, &philo[i]);
+		i++;
+	}
 }

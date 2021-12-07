@@ -1,4 +1,4 @@
 teste
 delay_o_meter.py
-philo
-.vscode
+./philo/philo
+./philo/.objs
