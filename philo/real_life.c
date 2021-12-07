@@ -6,11 +6,19 @@
 /*   By: wbertoni <wbertoni@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 01:54:00 by wbertoni          #+#    #+#             */
-/*   Updated: 2021/12/07 14:25:03 by wbertoni         ###   ########.fr       */
+/*   Updated: 2021/12/07 14:29:12 by wbertoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+static pthread_t	*thread_id_arr(int size)
+{
+	pthread_t	*td;
+
+	td = (pthread_t *)malloc(size * sizeof(pthread_t));
+	return (td);
+}
 
 static void	*silver_cloud(void *persona)
 {

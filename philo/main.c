@@ -6,19 +6,11 @@
 /*   By: wbertoni <wbertoni@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:01:23 by coder             #+#    #+#             */
-/*   Updated: 2021/12/07 14:25:21 by wbertoni         ###   ########.fr       */
+/*   Updated: 2021/12/07 14:28:56 by wbertoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-pthread_t	*thread_id_arr(int size)
-{
-	pthread_t	*td;
-
-	td = (pthread_t *)malloc(size * sizeof(pthread_t));
-	return (td);
-}
 
 void	init_args(t_args *args, int argc, char *argv[])
 {
