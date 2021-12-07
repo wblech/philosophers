@@ -3,14 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
+/*   By: wbertoni <wbertoni@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 18:17:44 by coder             #+#    #+#             */
-/*   Updated: 2021/10/13 18:18:56 by coder            ###   ########.fr       */
+/*   Updated: 2021/12/07 15:07:02 by wbertoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+bool	ft_isdigit(int c)
+{
+	if (c >= '0' && c <= '9')
+		return (true);
+	return (false);
+}
 
 int	ft_atoi(const char *str)
 {
@@ -30,7 +37,7 @@ int	ft_atoi(const char *str)
 		i++;
 	}
 	n = 0;
-	while (str[i] >= '0' && str[i] <= '9')
+	while (ft_isdigit(str[i]))
 	{
 		n = n * 10 + str[i] - '0';
 		i++;

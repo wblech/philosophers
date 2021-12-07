@@ -6,7 +6,7 @@
 /*   By: wbertoni <wbertoni@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 02:25:11 by wbertoni          #+#    #+#             */
-/*   Updated: 2021/12/07 14:25:53 by wbertoni         ###   ########.fr       */
+/*   Updated: 2021/12/07 15:14:55 by wbertoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ typedef struct s_philo
 ** utils.c
 */
 int				ft_atoi(const char *str);
+bool			ft_isdigit(int c);
 
 /*
 ** real_life.c

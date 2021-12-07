@@ -6,7 +6,7 @@
 /*   By: wbertoni <wbertoni@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:01:23 by coder             #+#    #+#             */
-/*   Updated: 2021/12/07 14:28:56 by wbertoni         ###   ########.fr       */
+/*   Updated: 2021/12/07 15:15:46 by wbertoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,33 @@ void	init_args(t_args *args, int argc, char *argv[])
 	args->is_over = false;
 }
 
-void	check_args(int argc)
+void	check_args(int argc, char *argv[])
 {
+	int	i;
+	int	j;
+
+	i = 1;
+	j = 0;
 	if (argc < 5 || argc > 6)
 	{
 		printf("Error: You should give 4 obligatory arguments and 1 optional: \
 number_of_philosophers, time_to_die, time_to_eat, time_to_sleeping,\
 [number_of_times_each_philosopher_must_eat]\n");
 		exit(1);
+	}
+	while (i < argc)
+	{
+		while (argv[i][j] != '\0')
+		{
+			if (!ft_isdigit(argv[i][j]))
+			{
+				printf("Only digits are allowed\n");
+				exit(1);
+			}
+			j++;
+		}
+		j = 0;
+		i++;
 	}
 }
 
@@ -63,7 +82,7 @@ int	main(int argc, char *argv[])
 	t_philo		*philo;
 
 	i = 0;
-	check_args(argc);
+	check_args(argc, argv);
 	init_args(&args, argc, argv);
 	if (args.number_of_philosophers == 1)
 		one_philo(&args);
